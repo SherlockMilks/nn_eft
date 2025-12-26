@@ -1,0 +1,47 @@
+LaTeX mintafájl szakdolgozat és diplomamunkáknak az SZTE
+Informatikai Tanszekcsoportja által megkövetelt formai
+követelményeinek megvalósításához.
+
+Módosítva: 2011.04.28 Németh L.Zoltan
+
+
+A fájl használatához szükséges a magyar.ldf 2005/05/12
+v1.5-ös vagy késõbbi verziója  ez letölthetõ a
+
+             http://www.math.bme.hu/latex/
+
+weblapról. Ez a fájl a forrás könyvtárába másolandó.
+
+Hasznos információk, linekek, LaTeX leírások a
+
+                    www.latex.lap.hu
+
+weboldalon vannak.
+
+
+A fájlok a következõk:
+
+LEIRAS.TXT            ez a fájl
+latexminta.tex        tex forrásfájl
+latexminta.dvi        lefordított állomány dvi (Device Independet) fájl
+latexminta.ps         postrcipt (nyomtatható fájl)
+latexminta.pdf        pdf változat
+latexminta.toc        tartalomjegyzék (a LaTeX automatikusan készíti)
+latexminta.log        log fájl (a 2. fordításról, szinten automatikus)
+abra.eps              beillesztendõ grafika (Encapsulated Postcript formátumban)
+magyar.ldf            magyar nyelvi támogatás 2005/05/12 v1.5
+kotestabla.tex        az elsõ  kötéstábla kinézetének tex forrása
+kotestabla.ps         az elõbbi nyomtatható változata
+
+
+A fordítás menete:
+
+1) latex latexminta    Ez a toc fájlba írja a tartalomjegyzékhez
+                       szükséges oldalszámokat.
+                       Létrehozza a latexminta.dvi fájlt.
+2) latex latexminta    Újabb fordításkor elkészül a tartalomjegyzék és
+                       feloldja a kerszthivatkozásokat.
+                       Elkészíti a végleges a latexminta.dvi fájlt.
+3) dvips latexminta    A dvi fájlból latexminta.ps-t készít.
+
+Pdf változat a ps2pdf programmal készíthetõ.

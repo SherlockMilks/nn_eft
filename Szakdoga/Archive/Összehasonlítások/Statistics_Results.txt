@@ -1,0 +1,48 @@
+------ Tensorflow eredméytől való eltérések: ------
+
+--- Hand-calculated ---
+Átlagos eltérés: 4.540844321413701e-09
+Max eltérés: 2.7499999999958114e-06
+Szórás: 4.8029237484014914e-08
+Relatív eltérés (%): 0.0003550989889574981
+Argmax egyezés (%): 68.176
+
+--- Ascend ---
+Átlagos eltérés: 4.796963136016379e-09
+Max eltérés: 3.6599999999609167e-06
+Szórás: 5.113254521085198e-08
+Relatív eltérés (%): 0.00036280105786405307
+Argmax egyezés (%): 68.328
+
+--- Descend ---
+Átlagos eltérés: 4.775678622555009e-09
+Max eltérés: 3.740000000002075e-06
+Szórás: 5.1690778363504704e-08
+Relatív eltérés (%): 0.0003659598537374939
+Argmax egyezés (%): 68.338
+
+
+------ Manuálisan számolt, alap sorrendű eredméytől való eltérések: ------
+
+--- Ascend ---
+Átlagos eltérés: 4.370362534322637e-09
+Max eltérés: 2.4499999999871847e-06
+Szórás: 4.420582130357002e-08
+Relatív eltérés (%): 0.00032798988707861395
+Argmax egyezés (%): 70.907
+
+--- Descend ---
+Átlagos eltérés: 4.590845062673628e-09
+Max eltérés: 2.7499999999958114e-06
+Szórás: 4.747265152860203e-08
+Relatív eltérés (%): 0.0003300543065751157
+Argmax egyezés (%): 71.42699999999999
+
+
+------ Növekvő és csökkenő közötti különbségek: ------
+
+Átlagos eltérés: 4.328793821561881e-09
+Max eltérés: 3.6599999999609167e-06
+Szórás: 4.669948998317856e-08
+Relatív eltérés (%): 0.00031132615804111606
+Argmax egyezés (%): 71.40100000000001

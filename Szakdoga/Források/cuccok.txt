@@ -1,0 +1,22 @@
+Mnist ellenséges példa:
+https://github.com/kzkadc/adversarial-example-mnist
+
+OTDK:
+https://www.inf.u-szeged.hu/  , Szász Attila csinált ilyen témából
+
+Iskolai gép ha már nehézkés:
+Bianka
+
+Decimal csomag pythonban
+
+
+deszti:
+https://keras.io/examples/vision/knowledge_distillation/
+
+
+
+
+
+
+
+
