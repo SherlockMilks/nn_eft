@@ -1,0 +1,2 @@
+Tshirt_Shirt: lr=0.5, og=1158
+Pullover_Coat: lr=10, og=14
