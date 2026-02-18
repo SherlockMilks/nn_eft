@@ -1,6 +1,7 @@
 import numpy as np
 from tensorflow import keras
 import matplotlib
+import Utils
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
@@ -8,18 +9,18 @@ import matplotlib.pyplot as plt
 
 # x_test = x_test/255.0
 
-model = keras.models.load_model("mnist_model_f64.keras")
+model = keras.models.load_model("models/mnist_model_f64.keras")
+logit_model = Utils.build_logit_model(model)
 
 min = float('inf')
 min_idx = -1
 
 for i in range(len(x_test)):
-    output = model.predict(x_test[i:i+1], verbose=0)
+
+    output = logit_model.predict(x_test[i:i+1], verbose=0)
     output = output[0]
 
-    sorted = np.sort(output)
-    first = sorted[len(output)-1]
-    second = sorted[len(output)-2]
+    (first, _), (second, _) = Utils.two_largest(output)
 
     diff = first - second
 
