@@ -1,4 +1,8 @@
-import numpy as np
+"""
+Using the model and an image set, this script finds
+the image for which the top two logits are closest in value.
+"""
+
 from tensorflow import keras
 import matplotlib
 import Utils
@@ -29,8 +33,8 @@ for i in range(len(x_test)):
         min_idx = i
 
 
-print(f"Legkisebb különbség: {min}\n"
-      f"Kép indexe: {min_idx}")
+print(f"Smallest difference: {min}\n"
+      f"The index of tha image: {min_idx}")
 
 
 plt.figure(figsize=(6, 6))

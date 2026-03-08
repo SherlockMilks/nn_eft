@@ -1,3 +1,11 @@
+"""
+MNIST knowledge distillation script (float64 precision).
+
+Based on the Keras knowledge distillation example:
+https://keras.io/examples/vision/knowledge_distillation/
+"""
+
+
 import tensorflow as tf
 from tensorflow import keras
 

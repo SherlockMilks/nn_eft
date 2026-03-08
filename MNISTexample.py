@@ -1,3 +1,8 @@
+"""
+Basic code, that draws out the first 16 images
+from the mnist dataset.
+"""
+
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt

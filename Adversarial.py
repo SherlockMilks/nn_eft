@@ -12,7 +12,7 @@ IMG_INDEX = 0
 NORM = False
 
 clip = 255.0
-lr = 0.5
+lr = 10
 
 (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
 

@@ -1,11 +1,19 @@
+"""
+Utility functions used in other modules.
+"""
+
 import tensorflow as tf
 from tensorflow import keras
 
+
+
+# This function takes a model that applies an activation function
+# to its output and returns a new model that outputs the logits instead.
 def build_logit_model(model):
-    #Eredeti kimeneti layer
+    # Original output layer
     last_dense = model.layers[-1]
 
-    #Új, logitos kimeneti layer
+    # New output layer that outputs logits
     logit_layer = tf.keras.layers.Dense(
         units=last_dense.units,
         activation=None,
@@ -14,10 +22,10 @@ def build_logit_model(model):
         name="logit_layer"
     )
 
-    #Új layer rákötve a régiek végére
+    # New layer is connected to previous layers
     logit_output = logit_layer(model.layers[-2].output)
 
-    #Új student logit kimeneti layerrel
+    # The new model
     logit_model = keras.Model(
         inputs=model.input,
         outputs=logit_output
@@ -27,6 +35,9 @@ def build_logit_model(model):
     return logit_model
 
 
+
+# This function finds the two largest numbers in a list
+# and returns the numbers with their indexes.
 def two_largest(original):
     logit1_idx = 0
     logit2_idx = 0

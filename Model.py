@@ -1,3 +1,8 @@
+"""
+This script is responsible for building the different
+models used to test numerical errors during model evaluation.
+"""
+
 import tensorflow as tf
 from tensorflow import keras
 
@@ -53,7 +58,7 @@ def train_and_save(dataset, name, norm=False, dtype="float64", epoch=10, batch_s
 
 train_and_save("mnist","models/mnist_model_f64.keras")
 train_and_save("mnist","models/mnist_model_norm.keras",True)
-train_and_save("mnist","models/mnist_model_f32.keras",False,"float32")
+train_and_save("mnist","models/mnist_model_f32.keras", False,"float32")
 train_and_save("fashion_mnist","models/fashion_model_f64.keras", epoch=25, batch_size=64)
 
 

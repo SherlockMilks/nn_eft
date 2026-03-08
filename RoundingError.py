@@ -1,165 +1,166 @@
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
+from tensorflow.keras.layers import Dense
 import DifferentOrders
 from DifferentOrders import two_sum
 
 np.set_printoptions(precision=64)
 
-OUTPUT_FILE_BA = 'output/adversarial/fashion/modelfashion_sequential_TsShimg_logit.csv'
-OUTPUT_FILE_AA = 'output/adversarial/fashion/modelfashion_sequential_TsShimg_softmax.csv'
-ADDITION_ERROR_FILE = "output/addition_error.csv"
-PRINT_ADDITION_ERROR = False
+OUTPUT_FILE_BA = 'test1.csv'
+OUTPUT_FILE_AA = 'test2.csv'
 IMG_INDEX = 0
-RND_AMOUNT = 10000
+RND_AMOUNT = 10
 NORM = False
 SIM_PARALLEL = False
 
-(x_train, y_train), (x_test, y_test) = keras.datasets.fashion_mnist.load_data()
+(x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
 
-sum_function = DifferentOrders.random_sum
+sum_function = DifferentOrders.random_sequential_sum
 if SIM_PARALLEL:
-    sum_function = DifferentOrders.random_tree_sum
+    sum_function = DifferentOrders.random_pairwise_sum
 
 if NORM:
     x_test = x_test / 255.0
 
-IMG = np.load("adversarial_img/fashion/adv_imageTShirt_Shirt.npy")
-#IMG = x_test[IMG_INDEX]
-
-
-model = keras.models.load_model("models/fashion_model_f64.keras")
+model = keras.models.load_model("models/mnist_model_f64.keras")
 input_dtype = model.layers[0].dtype
 
-# Súlyok kinyerése a manuális számításhoz
-weights, bias = model.layers[1].get_weights()
-weights2, bias2 = model.layers[2].get_weights()
-weights3, bias3 = model.layers[3].get_weights()
+# Extracting the weights for manual calculations
+weights = []
+bias = []
+for layer in model.layers:
+    if isinstance(layer, Dense):
+        w, b = layer.get_weights()
 
-if input_dtype == "float32":
-    weights = weights.astype(np.float32)
-    bias = bias.astype(np.float32)
-    weights2 = weights2.astype(np.float32)
-    bias2 = bias2.astype(np.float32)
-    weights3 = weights3.astype(np.float32)
-    bias3 = bias3.astype(np.float32)
+        if input_dtype == "float32":
+            w = w.astype(np.float32)
+            b = b.astype(np.float32)
 
-
-# TensorFlow által számolt végeredmény
-final_output_original = model.predict(tf.expand_dims(IMG, 0), verbose=0)
-
-# Input kinyerése a manuális számításhoz
-input_vec = IMG.reshape(-1).astype(input_dtype)
-
-# Eredeti sorrend
-first_layer_normal = input_vec @ weights + bias
-first_layer_normal = np.maximum(0, first_layer_normal)
-
-second_layer_normal = first_layer_normal @ weights2 + bias2
-second_layer_normal = np.maximum(0, second_layer_normal)
-
-third_layer_normal = second_layer_normal @ weights3 + bias3
-final_output_normal = tf.nn.softmax(third_layer_normal).numpy()
+        weights.append(w)
+        bias.append(b)
 
 
-#Növekvő sorrend
-first_layer_ascend = DifferentOrders.ascend(input_vec, weights, bias)
-first_layer_ascend = np.maximum(0, first_layer_ascend)
+def run_summation_orders(img):
+    # TensorFlow result
+    softmax_output_tf = model.predict(tf.expand_dims(img, 0), verbose=0)
 
-second_layer_ascend = DifferentOrders.ascend(first_layer_ascend, weights2, bias2)
-second_layer_ascend = np.maximum(0, second_layer_ascend)
+    # Input extraction
+    input_vec = img.reshape(-1).astype(input_dtype)
 
-third_layer_ascend = DifferentOrders.ascend(second_layer_ascend, weights3, bias3)
-final_output_ascend = tf.nn.softmax(third_layer_ascend).numpy()
+    logit_output_original = input_vec
+    softmax_output_original = []
+    logit_output_ascend = input_vec
+    softmax_output_ascend = []
+    logit_output_descend = input_vec
+    softmax_output_descend = []
+
+    for i in range(len(weights)):
+        # Original, ascending and descending summation orders
+        logit_output_original = logit_output_original @ weights[i] + bias[i]
+        logit_output_ascend = DifferentOrders.ascend(logit_output_ascend, weights[i], bias[i])
+        logit_output_descend = DifferentOrders.descend(logit_output_descend, weights[i], bias[i])
+
+        if i == len(weights)-1:
+            softmax_output_original = tf.nn.softmax(logit_output_original).numpy()
+            softmax_output_ascend = tf.nn.softmax(logit_output_ascend).numpy()
+            softmax_output_descend = tf.nn.softmax(logit_output_descend).numpy()
+        else:
+            logit_output_original = np.maximum(0, logit_output_original)
+            logit_output_ascend = np.maximum(0, logit_output_ascend)
+            logit_output_descend = np.maximum(0, logit_output_descend)
 
 
-#Csökkenő sorrend
-first_layer_descend = DifferentOrders.descend(input_vec, weights, bias)
-first_layer_descend = np.maximum(0, first_layer_descend)
+    # Calculating the results with randomized summation orders
+    logit_outputs_random = []
+    softmax_outputs_random = []
+    logit_outputs_random_eft = []
+    softmax_outputs_random_eft = []
 
-second_layer_descend = DifferentOrders.descend(first_layer_descend, weights2, bias2)
-second_layer_descend = np.maximum(0, second_layer_descend)
-
-third_layer_descend = DifferentOrders.descend(second_layer_descend, weights3, bias3)
-final_output_descend = tf.nn.softmax(third_layer_descend).numpy()
-
-
-with (open(ADDITION_ERROR_FILE, 'w') as g):
-    #Randomizált összeadások kiszámítása
-    random_outputs_sm = []
-    random_outputs_raw = []
-    random_outputs_eft = []
-    random_outputs_eft_sm = []
     for i in range(RND_AMOUNT):
+        logit_output_random = input_vec
+        logit_output_random_eft = input_vec
 
-        if PRINT_ADDITION_ERROR:
-            g.write(f"Random{i + 1}\n")
-            g.write(f"First layer\n")
-        r, e = DifferentOrders.randomOrder(input_vec, weights, bias, sum_function, PRINT_ADDITION_ERROR, g)
-        eft_r = r + e
+        for j in range(len(weights)):
+            logit_output_random, _ = DifferentOrders.linear_layer_custom_sum(
+                logit_output_random, weights[j], bias[j], sum_function)
 
-        r = np.maximum(0, r)
-        eft_r = np.maximum(0, eft_r)
+            logit_output_random_eft, e = DifferentOrders.linear_layer_custom_sum(
+                logit_output_random_eft, weights[j], bias[j], sum_function)
+            logit_output_random_eft += e
 
+            if j == len(weights) - 1:
+                softmax_output_random = tf.nn.softmax(logit_output_random).numpy()
+                softmax_output_random_eft = tf.nn.softmax(logit_output_random_eft).numpy()
 
-        if PRINT_ADDITION_ERROR:
-            g.write(f"Second layer\n")
-        r, _ = DifferentOrders.randomOrder(r, weights2, bias2, sum_function, PRINT_ADDITION_ERROR, g)
-        r = np.maximum(0, r)
-
-        eft_r, e = DifferentOrders.randomOrder(eft_r, weights2, bias2, sum_function, PRINT_ADDITION_ERROR, g)
-        eft_r += e
-        eft_r = np.maximum(0, eft_r)
-
-
-        if PRINT_ADDITION_ERROR:
-            g.write(f"Third layer\n")
-        r2, _ = DifferentOrders.randomOrder(r, weights3, bias3, sum_function, PRINT_ADDITION_ERROR, g)
-        r1 = tf.nn.softmax(r2).numpy()
-
-        eft_r, e = DifferentOrders.randomOrder(eft_r, weights3, bias3, sum_function, PRINT_ADDITION_ERROR, g)
-        eft_r += e
-        eft_sm = tf.nn.softmax(eft_r).numpy()
-
-        random_outputs_sm.append(r1)
-        random_outputs_raw.append(r2)
-        random_outputs_eft.append(eft_r)
-        random_outputs_eft_sm.append(eft_sm)
+            else:
+                logit_output_random = np.maximum(0, logit_output_random)
+                logit_output_random_eft = np.maximum(0, logit_output_random_eft)
 
 
-    # Eredmények kiírása fileba
+        logit_outputs_random.append(logit_output_random)
+        softmax_outputs_random.append(softmax_output_random)
+        logit_outputs_random_eft.append(logit_output_random_eft)
+        softmax_outputs_random_eft.append(softmax_output_random_eft)
+
+
+    # Writing the results into the output files
     with open(OUTPUT_FILE_BA, 'w') as f:
         f.write("Original\n")
-        f.write(",".join(map(str, third_layer_normal)) + "\n")
+        f.write(",".join(map(str, logit_output_original)) + "\n")
 
         f.write("Ascend\n")
-        f.write(",".join(map(str, third_layer_ascend)) + "\n")
+        f.write(",".join(map(str, logit_output_ascend)) + "\n")
 
         f.write("Descend\n")
-        f.write(",".join(map(str, third_layer_descend)) + "\n")
+        f.write(",".join(map(str, logit_output_descend)) + "\n")
 
-        for i in range(len(random_outputs_raw)):
+        for i in range(len(logit_outputs_random)):
             f.write(f"Random{i+1}\n")
-            # f.write(",".join(map(str, random_outputs_raw[i])) + "\n")
-            f.write("Raw:"+",".join(map(str, random_outputs_raw[i])) + "\n")
-            f.write("EFT:" + ",".join(map(str, random_outputs_eft[i])) + "\n")
+            #f.write(",".join(map(str, random_outputs_raw[i])) + "\n")
+            f.write("Raw:"+",".join(map(str, logit_outputs_random[i])) + "\n")
+            f.write("EFT:" + ",".join(map(str, logit_outputs_random_eft[i])) + "\n")
 
     with open(OUTPUT_FILE_AA, 'w') as f:
         f.write("Tensorflow\n")
-        f.write(",".join(map(str, final_output_original[0])) + "\n")
+        f.write(",".join(map(str, softmax_output_tf[0])) + "\n")
 
         f.write("Original\n")
-        f.write(",".join(map(str, final_output_normal)) + "\n")
+        f.write(",".join(map(str, softmax_output_original)) + "\n")
 
         f.write("Ascend\n")
-        f.write(",".join(map(str, final_output_ascend)) + "\n")
+        f.write(",".join(map(str, softmax_output_ascend)) + "\n")
 
         f.write("Descend\n")
-        f.write(",".join(map(str, final_output_descend)) + "\n")
+        f.write(",".join(map(str, softmax_output_descend)) + "\n")
 
-        for i in range(len(random_outputs_sm)):
+        for i in range(len(softmax_outputs_random)):
             f.write(f"Random{i+1}\n")
-            # f.write(",".join(map(str, random_outputs_sm[i])) + "\n")
-            f.write("Raw:" + ",".join(map(str, random_outputs_sm[i])) + "\n")
-            f.write("EFT:" + ",".join(map(str, random_outputs_eft_sm[i])) + "\n")
+            #f.write(",".join(map(str, random_outputs_sm[i])) + "\n")
+            f.write("Raw:" + ",".join(map(str, softmax_outputs_random[i])) + "\n")
+            f.write("EFT:" + ",".join(map(str, softmax_outputs_random_eft[i])) + "\n")
+
+
+
+
+single_img = x_test[IMG_INDEX]
+run_summation_orders(single_img)
+
+# adv_img = np.load("adversarial_img/f32/adv_image2_0.npy")
+# run_summation_orders(adv_img)
+
+
+# for i in range(149,300):
+#     OUTPUT_FILE_BA = 'output/eft/f64/sequential/logit/modelf64_sequential_logit'
+#     OUTPUT_FILE_AA = 'output/eft/f64/sequential/softmax/modelf64_sequential_softmax'
+#
+#     idx = str(i)+".csv"
+#     OUTPUT_FILE_BA += idx
+#     OUTPUT_FILE_AA += idx
+#     run_summation_orders(x_test[i])
+
+
+
+
+
 
