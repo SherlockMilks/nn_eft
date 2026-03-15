@@ -11,16 +11,32 @@ import random
 np.set_printoptions(precision=64)
 
 # Sorts the numbers in ascending order before summing them.
-def ascend(input, weights, bias, prints=False, file=None):
-    if prints:
-        file.write(str(np.array([sorted((input * weights[:, i])[(input * weights[:, i]) != 0]) for i in range(weights.shape[1])]))+"\n")
-    return np.array([np.sum(sorted((input * weights[:, i])[(input * weights[:, i]) != 0])) + bias[i] for i in range(weights.shape[1])])
+def ascend(values):
+    values = values[values != 0]
+
+    dtype = values[0].dtype
+
+    if len(values) == 0:
+        return dtype.type(0), dtype.type(0)
+
+    values_sorted = values[np.argsort(np.abs(values))]
+
+    sum_ = np.sum(values_sorted, dtype=dtype)
+    return sum_, dtype.type(0)
 
 # Sorts the numbers in descending order before summing them.
-def descend(input, weights, bias, prints=False, file=None):
-    if prints:
-        file.write(str(np.array([sorted((input * weights[:, i])[(input * weights[:, i]) != 0], reverse=True) for i in range(weights.shape[1])]))+"\n")
-    return np.array([np.sum(sorted((input * weights[:, i])[(input * weights[:, i]) != 0], reverse=True)) + bias[i] for i in range(weights.shape[1])])
+def descend(values):
+    values = values[values != 0]
+
+    dtype = values[0].dtype
+
+    if len(values) == 0:
+        return dtype.type(0), dtype.type(0)
+
+    values_sorted = values[np.argsort(-np.abs(values))]
+
+    sum_ = np.sum(values_sorted, dtype=dtype)
+    return sum_, dtype.type(0)
 
 
 # Computes a floating-point sum using randomized pairwise reduction
@@ -28,10 +44,10 @@ def descend(input, weights, bias, prints=False, file=None):
 def random_pairwise_sum(values):
     values = [value for value in values if value != 0]
 
-    if not values:
-        return 0, 0
-
     dtype = values[0].dtype
+
+    if not values:
+        return dtype.type(0), dtype.type(0)
 
     errors = []
 
@@ -52,7 +68,7 @@ def random_pairwise_sum(values):
 
     res = dtype.type(0)
     for i in errors:
-        res, err = two_sum(res,i)
+        res, err = two_sum(res, i)
         #if err != 0:
             #print("Hiba:", err)
 
@@ -64,10 +80,10 @@ def random_pairwise_sum(values):
 def random_sequential_sum(values):
     values = [value for value in values if value != 0]
 
-    if not values:
-        return 0, 0
-
     dtype = values[0].dtype
+
+    if not values:
+        return dtype.type(0), dtype.type(0)
 
     errors = []
     sum_ = dtype.type(0)
@@ -84,7 +100,7 @@ def random_sequential_sum(values):
 
     res = dtype.type(0)
     for i in errors:
-        res, err = two_sum(res,i)
+        res, err = two_sum(res, i)
         #if err != 0:
             #print("Hiba:", err)
 

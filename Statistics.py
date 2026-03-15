@@ -6,7 +6,8 @@ import Utils
 
 np.set_printoptions(precision=64)
 
-input = "output/adversarial/f64/modelf64_sequential_09img_logit.csv"
+input = "output/basic/f64/modelf64_parallel_firstimg_logit.csv"
+DTYPE = np.float64
 
 data = []
 data_eft = []
@@ -99,7 +100,7 @@ if logit1_greater_eft+logit2_greater_eft+logits_equal_eft != 0:
     datasets.append(data_eft)
 
 for i, current_data in enumerate(datasets):
-    current_data = np.array(current_data, dtype=np.float64)
+    current_data = np.array(current_data, dtype=DTYPE)
 
     col_max = np.max(current_data, axis=0)
     col_min = np.min(current_data, axis=0)
@@ -143,13 +144,13 @@ for i, current_data in enumerate(datasets):
 
         #Frequency
         counts, bin_edges = np.histogram(output_value, bins=100)
-        mean = 0.5 * (bin_edges[np.argmax(counts)] + bin_edges[np.argmax(counts) + 1])
+        mean = DTYPE(0.5 * (bin_edges[np.argmax(counts)] + bin_edges[np.argmax(counts) + 1]))
         shifted = output_value - mean
-        shifted_orig = original[i] - mean
-        shifted_ascend = ascend[i] - mean
-        shifted_descend = descend[i] - mean
-
+        shifted_orig = DTYPE(original[i]) - mean
+        shifted_ascend = DTYPE(ascend[i]) - mean
+        shifted_descend = DTYPE(descend[i]) - mean
         plt.figure(figsize=(10, 5))
+        print("aaa",min_output)
         plt.hist(shifted, bins=50, edgecolor='black', alpha=0.6, range=(min_output-mean, max_output-mean))
         plt.axvline(float(shifted_orig), color="blue", linewidth=1.5, alpha=0.5, label="Original")
         plt.axvline(float(shifted_ascend), color="red", linewidth=1.5, alpha=0.5, label="Ascend")

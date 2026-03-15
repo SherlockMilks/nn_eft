@@ -3,14 +3,13 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.layers import Dense
 import DifferentOrders
-from DifferentOrders import two_sum
 
 np.set_printoptions(precision=64)
 
 OUTPUT_FILE_BA = 'test1.csv'
 OUTPUT_FILE_AA = 'test2.csv'
 IMG_INDEX = 0
-RND_AMOUNT = 10
+RND_AMOUNT = 1000
 NORM = False
 SIM_PARALLEL = False
 
@@ -40,7 +39,6 @@ for layer in model.layers:
         weights.append(w)
         bias.append(b)
 
-
 def run_summation_orders(img):
     # TensorFlow result
     softmax_output_tf = model.predict(tf.expand_dims(img, 0), verbose=0)
@@ -58,8 +56,8 @@ def run_summation_orders(img):
     for i in range(len(weights)):
         # Original, ascending and descending summation orders
         logit_output_original = logit_output_original @ weights[i] + bias[i]
-        logit_output_ascend = DifferentOrders.ascend(logit_output_ascend, weights[i], bias[i])
-        logit_output_descend = DifferentOrders.descend(logit_output_descend, weights[i], bias[i])
+        logit_output_ascend = DifferentOrders.linear_layer_custom_sum(logit_output_ascend, weights[i], bias[i], DifferentOrders.ascend)
+        logit_output_descend = DifferentOrders.linear_layer_custom_sum(logit_output_descend, weights[i], bias[i], DifferentOrders.descend)
 
         if i == len(weights)-1:
             softmax_output_original = tf.nn.softmax(logit_output_original).numpy()
@@ -79,7 +77,9 @@ def run_summation_orders(img):
 
     for i in range(RND_AMOUNT):
         logit_output_random = input_vec
+        softmax_output_random = []
         logit_output_random_eft = input_vec
+        softmax_output_random_eft = []
 
         for j in range(len(weights)):
             logit_output_random, _ = DifferentOrders.linear_layer_custom_sum(
@@ -110,10 +110,10 @@ def run_summation_orders(img):
         f.write(",".join(map(str, logit_output_original)) + "\n")
 
         f.write("Ascend\n")
-        f.write(",".join(map(str, logit_output_ascend)) + "\n")
+        f.write(",".join(map(str, logit_output_ascend[0])) + "\n")
 
         f.write("Descend\n")
-        f.write(",".join(map(str, logit_output_descend)) + "\n")
+        f.write(",".join(map(str, logit_output_descend[0])) + "\n")
 
         for i in range(len(logit_outputs_random)):
             f.write(f"Random{i+1}\n")
@@ -129,10 +129,10 @@ def run_summation_orders(img):
         f.write(",".join(map(str, softmax_output_original)) + "\n")
 
         f.write("Ascend\n")
-        f.write(",".join(map(str, softmax_output_ascend)) + "\n")
+        f.write(",".join(map(str, softmax_output_ascend[0])) + "\n")
 
         f.write("Descend\n")
-        f.write(",".join(map(str, softmax_output_descend)) + "\n")
+        f.write(",".join(map(str, softmax_output_descend[0])) + "\n")
 
         for i in range(len(softmax_outputs_random)):
             f.write(f"Random{i+1}\n")
@@ -143,21 +143,21 @@ def run_summation_orders(img):
 
 
 
-single_img = x_test[IMG_INDEX]
-run_summation_orders(single_img)
+# single_img = x_test[IMG_INDEX]
+# run_summation_orders(single_img)
 
 # adv_img = np.load("adversarial_img/f32/adv_image2_0.npy")
 # run_summation_orders(adv_img)
 
 
-# for i in range(149,300):
-#     OUTPUT_FILE_BA = 'output/eft/f64/sequential/logit/modelf64_sequential_logit'
-#     OUTPUT_FILE_AA = 'output/eft/f64/sequential/softmax/modelf64_sequential_softmax'
-#
-#     idx = str(i)+".csv"
-#     OUTPUT_FILE_BA += idx
-#     OUTPUT_FILE_AA += idx
-#     run_summation_orders(x_test[i])
+for i in range(0,1000):
+    OUTPUT_FILE_BA = 'output/eft/f64/sequential/logit/modelf64_sequential_logit'
+    OUTPUT_FILE_AA = 'output/eft/f64/sequential/softmax/modelf64_sequential_softmax'
+
+    idx = str(i)+".csv"
+    OUTPUT_FILE_BA += idx
+    OUTPUT_FILE_AA += idx
+    run_summation_orders(x_test[i])
 
 
 
