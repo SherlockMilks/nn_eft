@@ -22,7 +22,7 @@ if SIM_PARALLEL:
 if NORM:
     x_test = x_test / 255.0
 
-model = keras.models.load_model("models/mnist_model_f64.keras")
+model = keras.models.load_model("models/mnist_model_student.h5")
 input_dtype = model.layers[0].dtype
 
 # Extracting the weights for manual calculations
@@ -151,8 +151,8 @@ def run_summation_orders(img):
 
 
 for i in range(0,1000):
-    OUTPUT_FILE_BA = 'output/eft/f64/sequential/logit/modelf64_sequential_logit'
-    OUTPUT_FILE_AA = 'output/eft/f64/sequential/softmax/modelf64_sequential_softmax'
+    OUTPUT_FILE_BA = 'output/eft/student/sequential/logit/modelstudent_sequential_logit'
+    OUTPUT_FILE_AA = 'output/eft/student/sequential/softmax/modelstudent_sequential_softmax'
 
     idx = str(i)+".csv"
     OUTPUT_FILE_BA += idx

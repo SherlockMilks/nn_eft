@@ -1,0 +1,148 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773670509.258200   48133 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773670509.258504   48133 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1773670509.309727   48133 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773670510.491605   48133 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773670510.491991   48133 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/layers/reshaping/flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(**kwargs)
+E0000 00:00:1773670510.966865   48133 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/optimizers/base_optimizer.py:86: UserWarning: Argument `decay` is no longer supported and will be ignored.
+  warnings.warn(
+WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+WARNING:absl:Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer.
+W0000 00:00:1773670511.166564   48133 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773670511.166782   48133 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773670511.166819   48133 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773670511.166989   48133 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773670511.167024   48133 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773670511.170010   48133 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773670511.170301   48133 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773670511.170362   48133 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773670511.170598   48133 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773670511.170644   48133 util.cc:163] Not handling type DT_DOUBLE
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773737564.441595  111455 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773737564.441863  111455 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1773737564.493001  111455 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773737565.703316  111455 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773737565.703684  111455 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/layers/reshaping/flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(**kwargs)
+E0000 00:00:1773737566.261697  111455 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/optimizers/base_optimizer.py:86: UserWarning: Argument `decay` is no longer supported and will be ignored.
+  warnings.warn(
+WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+WARNING:absl:Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer.
+W0000 00:00:1773737566.448359  111455 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737566.448621  111455 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737566.448663  111455 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737566.448855  111455 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737566.448893  111455 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737566.451936  111455 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737566.452178  111455 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737566.452220  111455 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737566.452443  111455 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737566.452483  111455 util.cc:163] Not handling type DT_DOUBLE
+Traceback (most recent call last):
+  File "/home_local/kancsar/nn_eft/RoundingError.py", line 160, in <module>
+    run_summation_orders(x_test[i])
+  File "/home_local/kancsar/nn_eft/RoundingError.py", line 85, in run_summation_orders
+    logit_output_random, _ = DifferentOrders.linear_layer_custom_sum(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home_local/kancsar/nn_eft/DifferentOrders.py", line 117, in linear_layer_custom_sum
+    result, errors = sum_function(input * weights[:, i])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home_local/kancsar/nn_eft/DifferentOrders.py", line 83, in random_sequential_sum
+    values = [value for value in values if value != 0]
+                                           ^^^^^^^^^^
+KeyboardInterrupt
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773737957.222771  111814 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773737957.223050  111814 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1773737957.281314  111814 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773737958.486796  111814 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773737958.487176  111814 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/layers/reshaping/flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(**kwargs)
+E0000 00:00:1773737959.018441  111814 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/optimizers/base_optimizer.py:86: UserWarning: Argument `decay` is no longer supported and will be ignored.
+  warnings.warn(
+WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+WARNING:absl:Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer.
+W0000 00:00:1773737959.212557  111814 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737959.212829  111814 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737959.212872  111814 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737959.213069  111814 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737959.213106  111814 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737959.216132  111814 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737959.216370  111814 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737959.216413  111814 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737959.216605  111814 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773737959.216641  111814 util.cc:163] Not handling type DT_DOUBLE
+Traceback (most recent call last):
+  File "/home_local/kancsar/nn_eft/RoundingError.py", line 160, in <module>
+    run_summation_orders(x_test[i])
+  File "/home_local/kancsar/nn_eft/RoundingError.py", line 88, in run_summation_orders
+    logit_output_random_eft, e = DifferentOrders.linear_layer_custom_sum(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home_local/kancsar/nn_eft/DifferentOrders.py", line 117, in linear_layer_custom_sum
+    result, errors = sum_function(input * weights[:, i])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home_local/kancsar/nn_eft/DifferentOrders.py", line 94, in random_sequential_sum
+    i_num = values.pop(i)
+            ^^^^^^^^^^^^^
+KeyboardInterrupt
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773738284.758223  112312 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773738284.758536  112312 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1773738284.812005  112312 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773738286.039198  112312 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773738286.039542  112312 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/layers/reshaping/flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(**kwargs)
+E0000 00:00:1773738286.551910  112312 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/optimizers/base_optimizer.py:86: UserWarning: Argument `decay` is no longer supported and will be ignored.
+  warnings.warn(
+WARNING:absl:Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+WARNING:absl:Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer.
+W0000 00:00:1773738286.743767  112312 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773738286.744021  112312 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773738286.744064  112312 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773738286.744264  112312 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773738286.744304  112312 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773738286.747542  112312 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773738286.747767  112312 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773738286.747805  112312 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773738286.747993  112312 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773738286.748029  112312 util.cc:163] Not handling type DT_DOUBLE
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773829455.175534  189542 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773829455.175854  189542 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1773829455.248673  189542 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773829456.490292  189542 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1773829456.490691  189542 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/layers/reshaping/flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(**kwargs)
+E0000 00:00:1773829456.971275  189542 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+WARNING:absl:No training configuration found in the save file, so the model was *not* compiled. Compile it manually.
+W0000 00:00:1773829457.158497  189542 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773829457.158729  189542 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773829457.158770  189542 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773829457.158958  189542 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773829457.158995  189542 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773829457.161819  189542 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773829457.162056  189542 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773829457.162098  189542 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773829457.162301  189542 util.cc:163] Not handling type DT_DOUBLE
+W0000 00:00:1773829457.162349  189542 util.cc:163] Not handling type DT_DOUBLE

@@ -12,9 +12,9 @@ np.set_printoptions(precision=64)
 
 # Sorts the numbers in ascending order before summing them.
 def ascend(values):
-    values = values[values != 0]
-
     dtype = values[0].dtype
+
+    values = values[values != 0]
 
     if len(values) == 0:
         return dtype.type(0), dtype.type(0)
@@ -26,9 +26,9 @@ def ascend(values):
 
 # Sorts the numbers in descending order before summing them.
 def descend(values):
-    values = values[values != 0]
-
     dtype = values[0].dtype
+
+    values = values[values != 0]
 
     if len(values) == 0:
         return dtype.type(0), dtype.type(0)
@@ -42,9 +42,9 @@ def descend(values):
 # Computes a floating-point sum using randomized pairwise reduction
 # with error tracking via the `two_sum` error-free transformation.
 def random_pairwise_sum(values):
-    values = [value for value in values if value != 0]
-
     dtype = values[0].dtype
+
+    values = [value for value in values if value != 0]
 
     if not values:
         return dtype.type(0), dtype.type(0)
@@ -78,9 +78,9 @@ def random_pairwise_sum(values):
 # Computes a floating-point sum using randomized sequential accumulation
 # with error tracking via the `two_sum` error-free transformation.
 def random_sequential_sum(values):
-    values = [value for value in values if value != 0]
-
     dtype = values[0].dtype
+
+    values = [value for value in values if value != 0]
 
     if not values:
         return dtype.type(0), dtype.type(0)
