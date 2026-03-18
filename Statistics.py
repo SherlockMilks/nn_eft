@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib
-matplotlib.use("TkAgg")
+matplotlib.use("TKagg")
 import matplotlib.pyplot as plt
 import Utils
 
 np.set_printoptions(precision=64)
 
-input = "output/basic/f64/modelf64_parallel_firstimg_logit.csv"
+input = "output/basic/f64/modelf64_sequential_firstimg_logit.csv"
 DTYPE = np.float64
 
 data = []
@@ -144,19 +144,23 @@ for i, current_data in enumerate(datasets):
 
         #Frequency
         counts, bin_edges = np.histogram(output_value, bins=100)
-        mean = DTYPE(0.5 * (bin_edges[np.argmax(counts)] + bin_edges[np.argmax(counts) + 1]))
-        shifted = output_value - mean
-        shifted_orig = DTYPE(original[i]) - mean
-        shifted_ascend = DTYPE(ascend[i]) - mean
-        shifted_descend = DTYPE(descend[i]) - mean
+        mode = DTYPE(0.5 * (bin_edges[np.argmax(counts)] + bin_edges[np.argmax(counts) + 1]))
+        shifted = output_value - mode
+        shifted_orig = DTYPE(original[i]) - mode
+        shifted_ascend = DTYPE(ascend[i]) - mode
+        shifted_descend = DTYPE(descend[i]) - mode
+        # Outputs for DrawHist.py
+        # np.save("seq.npy", output_value)
+        # np.save("original.npy", original[i])
+        # np.save("ascend.npy", ascend[i])
+        # np.save("descend.npy", descend[i])
         plt.figure(figsize=(10, 5))
-        print("aaa",min_output)
         plt.hist(shifted, bins=50, edgecolor='black', alpha=0.6, range=(min_output-mean, max_output-mean))
         plt.axvline(float(shifted_orig), color="blue", linewidth=1.5, alpha=0.5, label="Original")
         plt.axvline(float(shifted_ascend), color="red", linewidth=1.5, alpha=0.5, label="Ascend")
         plt.axvline(float(shifted_descend), color="green", linewidth=1.5, alpha=0.5, label="Descend")
         plt.title(f"Histogram of deviations for output {i}")
-        plt.xlabel("Deviation from the mean")
+        plt.xlabel("Deviation from the mode")
         plt.ylabel("Frequency")
         plt.show()
 
