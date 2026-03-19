@@ -146,3 +146,13 @@ W0000 00:00:1773829457.162056  189542 util.cc:163] Not handling type DT_DOUBLE
 W0000 00:00:1773829457.162098  189542 util.cc:163] Not handling type DT_DOUBLE
 W0000 00:00:1773829457.162301  189542 util.cc:163] Not handling type DT_DOUBLE
 W0000 00:00:1773829457.162349  189542 util.cc:163] Not handling type DT_DOUBLE
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773851954.914201    3917 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1773851959.232912    3917 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1773851970.457907    3917 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+/home_local/kancsar/nn_eft/venv/lib/python3.12/site-packages/keras/src/layers/reshaping/flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(**kwargs)
+E0000 00:00:1773851973.290729    3917 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+WARNING:absl:No training configuration found in the save file, so the model was *not* compiled. Compile it manually.
