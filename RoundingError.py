@@ -13,7 +13,7 @@ RND_AMOUNT = 1000
 NORM = False
 SIM_PARALLEL = False
 
-(x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
+(x_train, y_train), (x_test, y_test) = keras.datasets.fashion_mnist.load_data()
 
 sum_function = DifferentOrders.random_sequential_sum
 if SIM_PARALLEL:
@@ -22,7 +22,7 @@ if SIM_PARALLEL:
 if NORM:
     x_test = x_test / 255.0
 
-model = keras.models.load_model("models/mnist_model_f32.keras")
+model = keras.models.load_model("models/fashion_model_f64.h5")
 input_dtype = model.layers[0].dtype
 
 # Extracting the weights for manual calculations
@@ -151,8 +151,8 @@ def run_summation_orders(img):
 
 
 for i in range(0,1000):
-    OUTPUT_FILE_BA = 'output/eft/f32/sequential/logit/modelf32_sequential_logit'
-    OUTPUT_FILE_AA = 'output/eft/f32/sequential/logit/modelf32_sequential_softmax'
+    OUTPUT_FILE_BA = 'output/eft/fashion/sequential/logit/modelfashion_sequential_logit'
+    OUTPUT_FILE_AA = 'output/eft/fashion/sequential/softmax/modelfashion_sequential_softmax'
 
     idx = str(i)+".csv"
     OUTPUT_FILE_BA += idx
