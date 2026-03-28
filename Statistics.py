@@ -6,7 +6,7 @@ import Utils
 
 np.set_printoptions(precision=64)
 
-input = "output/basic/f64/modelf64_sequential_firstimg_logit.csv"
+input = "output/adversarial/f64/modelf64_parallel_09img_logit.csv"
 DTYPE = np.float64
 
 data = []
@@ -155,7 +155,7 @@ for i, current_data in enumerate(datasets):
         # np.save("ascend.npy", ascend[i])
         # np.save("descend.npy", descend[i])
         plt.figure(figsize=(10, 5))
-        plt.hist(shifted, bins=50, edgecolor='black', alpha=0.6, range=(min_output-mean, max_output-mean))
+        plt.hist(shifted, bins=50, edgecolor='black', alpha=0.6, range=(min_output-mode, max_output-mode))
         plt.axvline(float(shifted_orig), color="blue", linewidth=1.5, alpha=0.5, label="Original")
         plt.axvline(float(shifted_ascend), color="red", linewidth=1.5, alpha=0.5, label="Ascend")
         plt.axvline(float(shifted_descend), color="green", linewidth=1.5, alpha=0.5, label="Descend")
