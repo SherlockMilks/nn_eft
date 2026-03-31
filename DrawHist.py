@@ -1,7 +1,7 @@
-'''
+"""
 Script used to make good-looking histograms
 for sequential vs pairwise comparison
-'''
+"""
 
 import numpy as np
 import matplotlib

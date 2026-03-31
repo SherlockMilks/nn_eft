@@ -9,11 +9,12 @@ np.set_printoptions(precision=64)
 OUTPUT_FILE_BA = 'test1.csv'
 OUTPUT_FILE_AA = 'test2.csv'
 IMG_INDEX = 0
-RND_AMOUNT = 1000
+RND_AMOUNT = 10
 NORM = False
 SIM_PARALLEL = False
+K = 1  #K-Fold Value
 
-(x_train, y_train), (x_test, y_test) = keras.datasets.fashion_mnist.load_data()
+(x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
 
 sum_function = DifferentOrders.random_sequential_sum
 if SIM_PARALLEL:
@@ -22,7 +23,7 @@ if SIM_PARALLEL:
 if NORM:
     x_test = x_test / 255.0
 
-model = keras.models.load_model("models/fashion_model_f64.h5")
+model = keras.models.load_model("models/mnist_model_f64.h5")
 input_dtype = model.layers[0].dtype
 
 # Extracting the weights for manual calculations
@@ -56,8 +57,8 @@ def run_summation_orders(img):
     for i in range(len(weights)):
         # Original, ascending and descending summation orders
         logit_output_original = logit_output_original @ weights[i] + bias[i]
-        logit_output_ascend = DifferentOrders.linear_layer_custom_sum(logit_output_ascend, weights[i], bias[i], DifferentOrders.ascend)
-        logit_output_descend = DifferentOrders.linear_layer_custom_sum(logit_output_descend, weights[i], bias[i], DifferentOrders.descend)
+        logit_output_ascend, _ = DifferentOrders.linear_layer_custom_sum(logit_output_ascend, weights[i], bias[i], DifferentOrders.ascend)
+        logit_output_descend, _ = DifferentOrders.linear_layer_custom_sum(logit_output_descend, weights[i], bias[i], DifferentOrders.descend)
 
         if i == len(weights)-1:
             softmax_output_original = tf.nn.softmax(logit_output_original).numpy()
@@ -85,9 +86,15 @@ def run_summation_orders(img):
             logit_output_random, _ = DifferentOrders.linear_layer_custom_sum(
                 logit_output_random, weights[j], bias[j], sum_function)
 
-            logit_output_random_eft, e = DifferentOrders.linear_layer_custom_sum(
-                logit_output_random_eft, weights[j], bias[j], sum_function)
-            logit_output_random_eft += e
+            logit_output_random_eft, all_errors = DifferentOrders.linear_layer_custom_sum(
+                logit_output_random_eft, weights[j], bias[j], sum_function, K)
+
+            for i in range(len(all_errors)):
+                error_sum = tf.constant(0, dtype=input_dtype)
+                for e in reversed(all_errors[i]):
+                    error_sum += e
+
+                logit_output_random_eft[i] += error_sum
 
             if j == len(weights) - 1:
                 softmax_output_random = tf.nn.softmax(logit_output_random).numpy()
@@ -110,10 +117,10 @@ def run_summation_orders(img):
         f.write(",".join(map(str, logit_output_original)) + "\n")
 
         f.write("Ascend\n")
-        f.write(",".join(map(str, logit_output_ascend[0])) + "\n")
+        f.write(",".join(map(str, logit_output_ascend)) + "\n")
 
         f.write("Descend\n")
-        f.write(",".join(map(str, logit_output_descend[0])) + "\n")
+        f.write(",".join(map(str, logit_output_descend)) + "\n")
 
         for i in range(len(logit_outputs_random)):
             f.write(f"Random{i+1}\n")
@@ -129,10 +136,10 @@ def run_summation_orders(img):
         f.write(",".join(map(str, softmax_output_original)) + "\n")
 
         f.write("Ascend\n")
-        f.write(",".join(map(str, softmax_output_ascend[0])) + "\n")
+        f.write(",".join(map(str, softmax_output_ascend)) + "\n")
 
         f.write("Descend\n")
-        f.write(",".join(map(str, softmax_output_descend[0])) + "\n")
+        f.write(",".join(map(str, softmax_output_descend)) + "\n")
 
         for i in range(len(softmax_outputs_random)):
             f.write(f"Random{i+1}\n")
@@ -143,21 +150,21 @@ def run_summation_orders(img):
 
 
 
-# single_img = x_test[IMG_INDEX]
-# run_summation_orders(single_img)
+single_img = x_test[IMG_INDEX]
+run_summation_orders(single_img)
 
-# adv_img = np.load("adversarial_img/fashion/adv_imageTShirt_Shirt.npy")
+# adv_img = np.load("adversarial_img/fashion/adv_imagePullover_Coat.npy")
 # run_summation_orders(adv_img)
 
 
-for i in range(0,1000):
-    OUTPUT_FILE_BA = 'output/eft/fashion/sequential/logit/modelfashion_sequential_logit'
-    OUTPUT_FILE_AA = 'output/eft/fashion/sequential/softmax/modelfashion_sequential_softmax'
-
-    idx = str(i)+".csv"
-    OUTPUT_FILE_BA += idx
-    OUTPUT_FILE_AA += idx
-    run_summation_orders(x_test[i])
+# for i in range(0,1000):
+#     OUTPUT_FILE_BA = 'output/eft/fashion/sequential/logit/modelfashion_sequential_logit'
+#     OUTPUT_FILE_AA = 'output/eft/fashion/sequential/softmax/modelfashion_sequential_softmax'
+#
+#     idx = str(i)+".csv"
+#     OUTPUT_FILE_BA += idx
+#     OUTPUT_FILE_AA += idx
+#     run_summation_orders(x_test[i])
 
 
 

@@ -11,7 +11,7 @@ import random
 np.set_printoptions(precision=64)
 
 # Sorts the numbers in ascending order before summing them.
-def ascend(values):
+def ascend(values, *args):
     dtype = values[0].dtype
 
     values = values[values != 0]
@@ -25,7 +25,7 @@ def ascend(values):
     return sum_, dtype.type(0)
 
 # Sorts the numbers in descending order before summing them.
-def descend(values):
+def descend(values, *args):
     dtype = values[0].dtype
 
     values = values[values != 0]
@@ -41,7 +41,7 @@ def descend(values):
 
 # Computes a floating-point sum using randomized pairwise reduction
 # with error tracking via the `two_sum` error-free transformation.
-def random_pairwise_sum(values):
+def random_pairwise_sum(values, k=1):
     dtype = values[0].dtype
 
     values = [value for value in values if value != 0]
@@ -66,18 +66,25 @@ def random_pairwise_sum(values):
 
         del values[j]
 
-    res = dtype.type(0)
-    for i in errors:
-        res, err = two_sum(res, i)
-        #if err != 0:
-            #print("Hiba:", err)
+    error_sums = []
+    for i in range(0, k):
+        if not errors:
+            break
+        error_sum = dtype.type(0)
+        errors_temp = []
+        for e in errors:
+            error_sum, err = two_sum(error_sum, e)
+            if err != 0:
+                errors_temp.append(err)
+        errors = errors_temp
+        error_sums.append(error_sum)
 
-    return values[0], res
+    return values[0], error_sums
 
 
 # Computes a floating-point sum using randomized sequential accumulation
 # with error tracking via the `two_sum` error-free transformation.
-def random_sequential_sum(values):
+def random_sequential_sum(values, k=1):
     dtype = values[0].dtype
 
     values = [value for value in values if value != 0]
@@ -98,23 +105,31 @@ def random_sequential_sum(values):
         if e != 0:
             errors.append(e)
 
-    res = dtype.type(0)
-    for i in errors:
-        res, err = two_sum(res, i)
-        #if err != 0:
-            #print("Hiba:", err)
 
-    return sum_, res
+    error_sums = []
+    for i in range(0, k):
+        if not errors:
+            break
+        error_sum = dtype.type(0)
+        errors_temp = []
+        for e in errors:
+            error_sum, err = two_sum(error_sum, e)
+            if err != 0:
+                errors_temp.append(err)
+        errors = errors_temp
+        error_sums.append(error_sum)
+
+    return sum_, error_sums
 
 
 # Computes the output of a linear layer using a custom summation order,
 # while tracking rounding errors for each neuron.
-def linear_layer_custom_sum(input, weights, bias, sum_function):
+def linear_layer_custom_sum(input, weights, bias, sum_function, k=1):
     results = []
     all_errors = []
 
     for i in range(weights.shape[1]):
-        result, errors = sum_function(input * weights[:, i])
+        result, errors = sum_function(input * weights[:, i], k)
         results.append(result + bias[i])
         all_errors.append(errors)
 

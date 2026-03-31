@@ -6,7 +6,7 @@ import Utils
 
 np.set_printoptions(precision=64)
 
-input = "output/adversarial/f64/modelf64_parallel_09img_logit.csv"
+input = "output/adversarial/fashion/modelfashion_sequential_TsShimg_logit.csv"
 DTYPE = np.float64
 
 data = []
