@@ -47,7 +47,7 @@ def random_pairwise_sum(values, k=1):
     values = [value for value in values if value != 0]
 
     if not values:
-        return dtype.type(0), dtype.type(0)
+        return dtype.type(0), []
 
     errors = []
 
@@ -90,7 +90,7 @@ def random_sequential_sum(values, k=1):
     values = [value for value in values if value != 0]
 
     if not values:
-        return dtype.type(0), dtype.type(0)
+        return dtype.type(0), []
 
     errors = []
     sum_ = dtype.type(0)

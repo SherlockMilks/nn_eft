@@ -6,11 +6,11 @@ import DifferentOrders
 
 np.set_printoptions(precision=64)
 
-OUTPUT_FILE_BA = 'output/kfold/fashion/sequential/logit/modelfashion_sequential_logit.csv'
-OUTPUT_FILE_AA = 'output/kfold/fashion/sequential/softmax/modelfashion_sequential_softmax.csv'
+OUTPUT_FILE_BA = 'output/kfold/f64/sequential/logit/modelf64_sequential_logit'
+OUTPUT_FILE_AA = 'output/kfold/f64/sequential/logit/modelf64_sequential_softmax'
 IMG_INDEX = 0
 RND_AMOUNT = 1000
-NORM = True
+NORM = False
 SIM_PARALLEL = False
 K = 3  #K-Fold Value
 
@@ -23,7 +23,7 @@ if SIM_PARALLEL:
 if NORM:
     x_test = x_test / 255.0
 
-model = keras.models.load_model("models/mnist_model_norm.h5")
+model = keras.models.load_model("models/mnist_model_f64.h5")
 input_dtype = model.layers[0].dtype
 
 # Extracting the weights for manual calculations
@@ -158,8 +158,8 @@ def run_summation_orders(img):
 
 
 for i in range(0,1000):
-     OUTPUT_FILE_BA = 'output/kfold/norm/sequential/logit/modelnorm_sequential_logit'
-     OUTPUT_FILE_AA = 'output/kfold/norm/sequential/softmax/modelnorm_sequential_softmax'
+     OUTPUT_FILE_BA = 'output/kfold/f64/sequential/logit/modelf64_sequential_logit'
+     OUTPUT_FILE_AA = 'output/kfold/f64/sequential/softmax/modelf64_sequential_softmax'
 
      idx = str(i)+".csv"
      OUTPUT_FILE_BA += idx
