@@ -22,9 +22,9 @@ def prep_data(dataset, norm=False):
     y_train, y_val = y_train[:-5000], y_train[-5000:]
 
     if norm:
-        x_train = x_train / 255.0
-        x_val = x_val / 255.0
-        x_test = x_test / 255.0
+        x_train = x_train / 256.0
+        x_val = x_val / 256.0
+        x_test = x_test / 256.0
 
     return (x_train, y_train), (x_val, y_val), (x_test, y_test)
 
@@ -57,7 +57,7 @@ def train_and_save(dataset, name, norm=False, dtype="float64", epoch=10, batch_s
 
 
 train_and_save("mnist","models/mnist_model_f64.keras")
-train_and_save("mnist","models/mnist_model_norm.keras",True)
+train_and_save("mnist","models/mnist_model_norm2.keras",True)
 train_and_save("mnist","models/mnist_model_f32.keras", False,"float32")
 train_and_save("fashion_mnist","models/fashion_model_f64.keras", epoch=25, batch_size=64)
 

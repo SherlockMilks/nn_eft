@@ -3,8 +3,10 @@ import matplotlib
 matplotlib.use("TKagg")
 import matplotlib.pyplot as plt
 import os
+import csv
 
 np.set_printoptions(precision=64)
+DTYPE = np.float64
 
 dir = "output/eft/f64/sequential/logit"
 raw_all = []
@@ -32,8 +34,8 @@ for file in files_sorted:
     eft_all.append(np.array(eft_img))
 
 
-raw_all = np.array(raw_all)
-eft_all = np.array(eft_all)
+raw_all = np.array(raw_all, dtype=DTYPE)
+eft_all = np.array(eft_all, dtype=DTYPE)
 
 
 
@@ -57,10 +59,16 @@ for raw_img, eft_img in zip(raw_all, eft_all):
     eft_img_ranges.append(eft_max_range)
 
 
-
 raw_img_ranges = np.array(raw_img_ranges)
 eft_img_ranges = np.array(eft_img_ranges)
 
+
+with open("output/csv/f64_scatter.csv", "w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["image_id", "raw_range", "eft_range"])
+
+    for i in range(len(raw_img_ranges)):
+        writer.writerow([i, raw_img_ranges[i], eft_img_ranges[i]])
 
 print("=== RAW ===")
 raw_min_idx = np.argmin(raw_img_ranges)

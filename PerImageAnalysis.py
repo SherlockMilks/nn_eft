@@ -6,7 +6,7 @@ import Utils
 
 np.set_printoptions(precision=64)
 
-input = "output/adversarial/fashion/modelfashion_sequential_TsShimg_logit.csv"
+input = "output/basic/f64/modelf64_parallel_firstimg_logit.csv"
 DTYPE = np.float64
 
 data = []
@@ -150,7 +150,7 @@ for i, current_data in enumerate(datasets):
         shifted_ascend = DTYPE(ascend[i]) - mode
         shifted_descend = DTYPE(descend[i]) - mode
         # Outputs for DrawHist.py
-        # np.save("seq.npy", output_value)
+        # np.save("par.npy", output_value)
         # np.save("original.npy", original[i])
         # np.save("ascend.npy", ascend[i])
         # np.save("descend.npy", descend[i])

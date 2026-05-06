@@ -34,18 +34,18 @@ bins = np.linspace(common_min, common_max, 51)
 
 plt.rcParams['xtick.labelsize'] = 12
 plt.rcParams['ytick.labelsize'] = 12
-plt.figure(figsize=(8, 4))
+plt.figure(figsize=(8, 5))
 
-plt.hist(shifted_sequential, bins=bins, alpha=0.5, label="Sequential", color="purple")
-plt.hist(shifted_pairwise, bins=bins, alpha=0.5, color="orange", label="Pairwise")
+plt.hist(shifted_sequential, bins=bins, alpha=0.5, label="Szekvenciális", color="purple")
+plt.hist(shifted_pairwise, bins=bins, alpha=0.5, color="orange", label="Párosított")
 
-plt.axvline(float(shifted_orig), color="blue", linewidth=1.5, label="Original")
-plt.axvline(float(shifted_ascend), color="red", linewidth=1.5, label="Ascend")
-plt.axvline(float(shifted_descend), color="green", linewidth=1.5, label="Descend")
+plt.axvline(float(shifted_orig), color="blue", linewidth=1.5, label="Eredeti")
+plt.axvline(float(shifted_ascend), color="red", linewidth=1.5, label="Növekvő")
+plt.axvline(float(shifted_descend), color="green", linewidth=1.5, label="Csökkenő")
 
-plt.xlabel("Deviation from mode", fontweight='bold', fontsize=12)
-plt.ylabel("Frequency", fontweight='bold', fontsize=12)
+plt.xlabel("Módusztól való eltérés", fontsize=13)
+plt.ylabel("Gyakoriság", fontsize=13)
 # plt.title("Float64 model deviations for output 0", fontweight='bold', fontsize=12)
-plt.legend(prop=FontProperties(weight='bold'))
+plt.legend(prop=FontProperties(size='11'))
 
 plt.savefig("plot0.pdf")
