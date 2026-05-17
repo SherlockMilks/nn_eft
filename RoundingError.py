@@ -10,7 +10,7 @@ OUTPUT_FILE_BA = 'test1.csv'
 OUTPUT_FILE_AA = 'test2.csv'
 IMG_INDEX = 0
 RND_AMOUNT = 1000
-NORM = False
+NORM = True
 SIM_PARALLEL = False
 K = 1  #K-Fold Value
 
@@ -23,7 +23,7 @@ if SIM_PARALLEL:
 if NORM:
     x_test = x_test / 256.0
 
-model = keras.models.load_model("models/mnist_model_norm2.keras")
+model = keras.models.load_model("models/mnist_model_norm2.h5")
 input_dtype = model.layers[0].dtype
 
 # Extracting the weights for manual calculations
