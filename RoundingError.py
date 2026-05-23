@@ -21,9 +21,9 @@ if SIM_PARALLEL:
     sum_function = DifferentOrders.random_pairwise_sum
 
 if NORM:
-    x_test = x_test / 256.0
+    x_test = x_test / 255.0
 
-model = keras.models.load_model("models/mnist_model_norm2.h5")
+model = keras.models.load_model("models/mnist_model_norm.keras")
 input_dtype = model.layers[0].dtype
 
 # Extracting the weights for manual calculations
@@ -150,21 +150,24 @@ def run_summation_orders(img):
 
 
 
-# single_img = x_test[IMG_INDEX]
-# run_summation_orders(single_img)
+# For one image from a dataset, run:
+single_img = x_test[IMG_INDEX]
+run_summation_orders(single_img)
 
+# For an adversarial image, run:
 # adv_img = np.load("adversarial_img/fashion/adv_imagePullover_Coat.npy")
 # run_summation_orders(adv_img)
 
 
-for i in range(0,1000):
-     OUTPUT_FILE_BA = 'output/eft/norm2/sequential/logit/modelnorm2_sequential_logit'
-     OUTPUT_FILE_AA = 'output/eft/norm2/sequential/softmax/modelnorm2_sequential_softmax'
-
-     idx = str(i)+".csv"
-     OUTPUT_FILE_BA += idx
-     OUTPUT_FILE_AA += idx
-     run_summation_orders(x_test[i])
+# For multiple images from a dataset, run:
+# for i in range(0,1000):
+#      OUTPUT_FILE_BA = 'output/eft/norm/sequential/logit/modelnorm_sequential_logit'
+#      OUTPUT_FILE_AA = 'output/eft/norm/sequential/softmax/modelnorm_sequential_softmax'
+#
+#      idx = str(i)+".csv"
+#      OUTPUT_FILE_BA += idx
+#      OUTPUT_FILE_AA += idx
+#      run_summation_orders(x_test[i])
 
 
 

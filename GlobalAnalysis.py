@@ -8,7 +8,7 @@ import csv
 np.set_printoptions(precision=64)
 DTYPE = np.float64
 
-dir = "output/eft/f64/sequential/logit"
+dir = "output/eft/norm2/sequential/logit"
 raw_all = []
 eft_all = []
 
@@ -63,7 +63,7 @@ raw_img_ranges = np.array(raw_img_ranges)
 eft_img_ranges = np.array(eft_img_ranges)
 
 
-with open("output/csv/f64_scatter.csv", "w", newline="") as f:
+with open("output/csv/norm2_scatter.csv", "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["image_id", "raw_range", "eft_range"])
 
