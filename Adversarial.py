@@ -23,7 +23,7 @@ if NORM:
     clip = 1.0
 
 img = tf.Variable(original, dtype=tf.float64)
-model = keras.models.load_model("models/mnist_model_f64.keras")
+model = keras.models.load_model("models/old_models/mnist_model_f64.keras")
 logit_model = Utils.build_logit_model(model)
 
 originalOutput = logit_model(tf.expand_dims(img, 0), training=False)[0]

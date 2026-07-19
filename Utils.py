@@ -60,4 +60,11 @@ def two_largest(original):
     return (first, logit1_idx), (second, logit2_idx)
 
 
+def log_factory(file):
+    def log(*args, **kwargs):
+        print(*args, **kwargs)
+        print(*args, **kwargs, file=file)
+    return log
+
+
 

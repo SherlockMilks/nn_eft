@@ -21,8 +21,19 @@ def ascend(values, *args):
 
     values_sorted = values[np.argsort(np.abs(values))]
 
-    sum_ = np.sum(values_sorted, dtype=dtype)
-    return sum_, dtype.type(0)
+    errors = []
+    sum_ = dtype.type(0)
+    for value in values_sorted:
+        sum_, e = two_sum(sum_, value)
+
+        if e != 0:
+            errors.append(e)
+
+    error_sum = dtype.type(0)
+    for error in errors:
+        error_sum += error
+
+    return sum_, error_sum
 
 # Sorts the numbers in descending order before summing them.
 def descend(values, *args):
@@ -35,8 +46,19 @@ def descend(values, *args):
 
     values_sorted = values[np.argsort(-np.abs(values))]
 
-    sum_ = np.sum(values_sorted, dtype=dtype)
-    return sum_, dtype.type(0)
+    errors = []
+    sum_ = dtype.type(0)
+    for value in values_sorted:
+        sum_, e = two_sum(sum_, value)
+
+        if e != 0:
+            errors.append(e)
+
+    error_sum = dtype.type(0)
+    for error in errors:
+        error_sum += error
+
+    return sum_, error_sum
 
 
 # Computes a floating-point sum using randomized pairwise reduction

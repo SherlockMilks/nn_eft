@@ -92,6 +92,6 @@ def teachStudent(teacher, student):
 
     student.save("mnist_model_student.keras")
 
-teacher = keras.models.load_model("models/mnist_model_f64.keras")
+teacher = keras.models.load_model("models/old_models/mnist_model_f64.keras")
 teachStudent(teacher, makeStudent())
 

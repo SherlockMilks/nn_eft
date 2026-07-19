@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 # x_test = x_test/255.0
 
-model = keras.models.load_model("models/mnist_model_f64.keras")
+model = keras.models.load_model("models/old_models/mnist_model_f64.keras")
 logit_model = Utils.build_logit_model(model)
 
 min = float('inf')
