@@ -13,7 +13,8 @@ import matplotlib.pyplot as plt
 
 # x_test = x_test/255.0
 
-model = keras.models.load_model("models/old_models/mnist_model_f64.keras")
+model_name = "models/mnist_W256.keras"
+model = keras.models.load_model(model_name)
 logit_model = Utils.build_logit_model(model)
 
 min = float('inf')
@@ -40,4 +41,9 @@ print(f"Smallest difference: {min}\n"
 plt.figure(figsize=(6, 6))
 plt.imshow(x_test[min_idx], cmap='gray')
 plt.axis('off')
+plt.savefig(
+    f"worst/{model_name.replace('models/','').replace('.keras','')}_{min_idx}.png",
+    bbox_inches='tight',
+    pad_inches=0
+)
 plt.show()
