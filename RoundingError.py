@@ -10,7 +10,7 @@ import argparse
 np.set_printoptions(precision=64)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--dtype", type=str, default="float32")
+parser.add_argument("--dtype", type=str, default="bfloat16")
 args = parser.parse_args()
 input_dtype = np.dtype(args.dtype)
 
@@ -118,6 +118,7 @@ def run_summation_orders(img, model, input_dtype, output_file_ba='test1.csv', ou
             f.write("EFT:" + ",".join(map(str, logit_outputs_random_eft[i])) + "\n")
 
 
+<<<<<<< HEAD
 
 #Selecting models
 dir = "models"
@@ -125,7 +126,13 @@ files = os.listdir(dir)
 models = [file for file in files if file.endswith(".h5")]
 
 
+=======
+>>>>>>> bf2e5db836415ac8906dd9df593c84aa438d1ac2
 # For multiple images from a dataset, run:
+models_dir = "models"
+files = os.listdir(models_dir)
+models = [file for file in files if file.endswith(".h5")]
+
 for model_name in models:
     model = keras.models.load_model(f"models/{model_name}")
     for i in range(0,1000):
@@ -140,9 +147,56 @@ for model_name in models:
 
 
 # For one image from a dataset, run:
-# single_img = x_test[0]
-# run_summation_orders(single_img, model, input_dtype, rnd_amount=10)
+# worst_dir = "worst"
+# files = os.listdir(worst_dir)
+# images = [file for file in files if file.endswith(".png")]
+#
+# for img_name in images:
+#     img_parts = img_name.split("_")
+#     model_name_raw = img_parts[0]+"_"+img_parts[1]
+#     model_name = model_name_raw+".keras"
+#     img_idx = int(Path(img_parts[2]).stem)
+#
+#     single_img = x_test[img_idx]
+#     model = keras.models.load_model(f"models/{model_name}")
+#
+#     output_dir_ba = Path(f'runs/worst/{input_dtype}/sequential')
+#     output_dir_ba.mkdir(exist_ok=True, parents=True)
+#
+#     output_file_ba = output_dir_ba / f"{model_name_raw}.csv"
+#     run_summation_orders(single_img, model, input_dtype, str(output_file_ba), sim_parallel=False, rnd_amount=1000)
+
+
 
 # For an adversarial image, run:
-# adv_img = np.load("adversarial_img/fashion/adv_imagePullover_Coat.npy")
-# run_summation_orders(adv_img, model)
+# adv_dir = "adversarial_img"
+# files = os.listdir(adv_dir)
+# images = [file for file in files if file.endswith(".npy")]
+#
+#
+# for img_name in images:
+#     img_parts = img_name.split("_")
+#     model_name_raw = img_parts[0]+"_"+img_parts[1]
+#     model_name = model_name_raw+".keras"
+#
+#     adv_img = np.load(f"adversarial_img/{img_name}")
+#     model = keras.models.load_model(f"models/{model_name}")
+#
+#     if int(Path(img_parts[2]).stem) == 0:
+#         original = "base_first"
+#     else:
+#         original = "base_worst"
+#
+#     output_dir_ba = Path(f'runs/adversarial/{input_dtype}/sequential/{original}')
+#     output_dir_ba.mkdir(exist_ok=True, parents=True)
+#
+#     output_file_ba = output_dir_ba / f"{model_name_raw}.csv"
+#     run_summation_orders(adv_img, model, input_dtype, str(output_file_ba), sim_parallel=False, rnd_amount=1000)
+#
+#
+#
+#     output_dir_ba = Path(f'runs/adversarial/{input_dtype}/pairwise/{original}')
+#     output_dir_ba.mkdir(exist_ok=True, parents=True)
+#
+#     output_file_ba = output_dir_ba / f"{model_name_raw}.csv"
+#     run_summation_orders(adv_img, model, input_dtype, str(output_file_ba), sim_parallel=True, rnd_amount=1000)

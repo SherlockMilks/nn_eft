@@ -5,9 +5,10 @@ from tensorflow import keras
 import matplotlib
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 
-GOAL = 1e-15  #1e-6 float32-nél
+GOAL = 1e-6
 IMG_INDEX = 0
 NORM = False
 
@@ -23,7 +24,8 @@ if NORM:
     clip = 1.0
 
 img = tf.Variable(original, dtype=tf.float64)
-model = keras.models.load_model("models/old_models/mnist_model_f64.keras")
+model_name = "mnist_W16.keras"
+model = keras.models.load_model(f"models/{model_name}")
 logit_model = Utils.build_logit_model(model)
 
 originalOutput = logit_model(tf.expand_dims(img, 0), training=False)[0]
@@ -36,7 +38,7 @@ while 1:
 
         preds = logit_model(tf.expand_dims(img, 0), training=False)[0]
         goal = tf.abs(preds[c1]-preds[c2])
-        loss = tf.square(goal)
+        loss = tf.square(preds[c1] - preds[c2])
 
     if goal < GOAL:
         print(c1, ":", preds[c1])
@@ -73,5 +75,5 @@ cbar = fig.colorbar(im, ax=axes, shrink=0.9, pad=0.05)
 
 plt.show()
 
-img_name = "adv_image"+str(c1)+"_"+str(c2)
+img_name = f"adversarial_img/{Path(model_name).stem}_{IMG_INDEX}"
 np.save(img_name, img.numpy())
