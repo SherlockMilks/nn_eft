@@ -121,13 +121,13 @@ def run_summation_orders(img, model, input_dtype, output_file_ba='test1.csv', ou
 # For multiple images from a dataset, run:
 models_dir = "models"
 files = os.listdir(models_dir)
-models = [file for file in files if file.endswith(".keras")]
+models = [file for file in files if file.endswith(".h5")]
 
 for model_name in models:
     model = keras.models.load_model(f"models/{model_name}")
     for i in range(0,1000):
         idx = str(i)+".csv"
-        model_name_raw = model_name.replace(".keras","")
+        model_name_raw = model_name.replace(".h5","")
         output_dir_ba = Path(f'runs/eft/{input_dtype}/{model_name_raw}/sequential')
         output_dir_ba.mkdir(exist_ok=True, parents=True)
 
