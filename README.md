@@ -1,4 +1,3 @@
-Szakdolgozat repository.
 Neurális hálók kiértékelésének numerikus stabilitásvizsgálata, valamint error-free transzformációk alkalmazása a numerikus stabilitás javítására.
 
 ## A projekt futtatásához az alábbi Python csomagok szükségesek:
